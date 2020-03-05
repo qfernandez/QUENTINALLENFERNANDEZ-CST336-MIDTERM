@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Midterm </title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css/styles.css" type="text/css"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style>
+
+</style>
+<script>
+
+// function midtermFunction(){
+//     var action_src = "http://localhost/test/" + document.getElementsByName("keywords")[0].value;
+//     var your_form = document.getElementById('your_form');
+//     your_form.action = action_src ;
+// }
+
+function searchISBN() {
+    $("#info").empty();
+    
+    $.ajax({
+       type: "GET",
+       url: "https://openlibrary.org/api/books?bibkeys=ISBN:" + $("#ISBN").val() + "&format=json&jscmd=data",
+       dataType: "json",
+       success: function(data){
+           console.log(data);
+           $('#info').append("<br>Title: " + data["ISBN:0451526538"]["title"]);
+           $('#info').append("<br>Author: " + data["ISBN:0451526538"]["authors"]["0"]["name"]);
+           $('#info').append("<br>Publish: " + data["ISBN:0451526538"]["publish_date"]);
+           //$('#information').append("<br>Publisher: " + data["ISBN:0451526538"]["publishers"]["0"]["name"]);
+           $('#info').append("<br>Publisher: " + data[""]);
+           $('#info').append("<br>ISBN: " + data["ISBN:0451526538"]["identifiers"]["isbn_10"]);
+           $('#info').append("<br>Pages: " + data["ISBN:0451526538"]["number_of_pages"]);
+       }
+       
+    });
+    }//searchImage()
+
+</script>
+</head>
+<body>
+
+<h1> Open Library </h1>
+<p>
+    Please enter the ISBN of the book you'd like to retrieve:
+</p>
+<br>
+<label>
+    ISBN
+</label>
+<input type="text" id="ISBN" placeholder="ISBN"> 
+<button type="submit" onclick="searchISBN()"> Query </button>
+
+<br /><br />
+
+<div id="info"></div>
+
+</body>
+</html>
